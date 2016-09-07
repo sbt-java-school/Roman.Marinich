@@ -13,27 +13,6 @@ import java.util.stream.IntStream;
  */
 
 public class Solver {
-
-    public static void main(String[] args) {
-        List<String> lines;
-        int size;
-        IntStream numbers;
-        try {
-            lines = Files.readAllLines(Paths.get("C:\\Users\\god\\IdeaProjects\\sbtjava\\src\\main\\java\\sbt\\HomeTasks\\One\\input.txt"), Charset.forName("UTF-8"));
-            size = Integer.parseInt(lines.get(0).split(" ")[1]);
-            numbers = Arrays.stream(lines.get(1).split(" ")).mapToInt(value -> Integer.parseInt(value));
-        } catch (Exception e) {
-            System.err.println("there is some error with reading the file");
-            return;
-        }
-        Pair<Integer, Integer> pair = runEngine(size, numbers);
-        if (pair == null) {
-            System.err.println("Something went wrong");
-            return;
-        }
-        System.out.println(String.format("%d %d", pair.getLeft(), pair.getRight()));
-    }
-
     public static Pair<Integer, Integer> runEngine(int param, IntStream numbers)  {
         if (numbers == null || param < 1)
             return null;
