@@ -7,7 +7,7 @@ import java.util.Set;
  * Created by SBTJavastudent on 25.08.2016.
  */
 
-interface Multimap<K, V> {
+public interface Multimap<K, V> {
     int size();
     boolean isEmpty();
     boolean containsKey(Object key);

@@ -11,12 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-
 import static main.java.sbt.HomeTasks.One.Solver.runEngine;
-import org.junit.Assert.*;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by god on 9/7/2016.

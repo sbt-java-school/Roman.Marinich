@@ -7,7 +7,7 @@ public class Operation {
     private final Pair<Double, Double> operands;
     private final String operation;
 
-    Operation(double left, double right, String operation) {
+    public Operation(double left, double right, String operation) {
         this.operands = new Pair<>(left, right);
         this.operation = operation;
     }

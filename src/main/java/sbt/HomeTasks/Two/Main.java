@@ -20,14 +20,14 @@ public class Main {
 
         String output =
                 "output: \n" +
-                "keySet: " + multimap.keySet().toString() + "\n" +
-                "size: " + multimap.size() + "\n" +
-                "isEmpty: " + multimap.isEmpty() + "\n" +
-                "containsKey for " + MERCEDES + ": " + multimap.containsKey(MERCEDES) + "\n" +
-                "containsValue for \"Truck(1, \"MERCEDES\")\": " + multimap.containsValue(tr) + "\n" +
-                "get for " + MERCEDES + ": " + multimap.get(MERCEDES) + "\n" +
-                "remove for " + MERCEDES + ": " + multimap.remove(MERCEDES) + "\n" +
-                "keySet: " + multimap.keySet().toString();
+                        "keySet: " + multimap.keySet().toString() + "\n" +
+                        "size: " + multimap.size() + "\n" +
+                        "isEmpty: " + multimap.isEmpty() + "\n" +
+                        "containsKey for " + MERCEDES + ": " + multimap.containsKey(MERCEDES) + "\n" +
+                        "containsValue for \"Truck(1, \"MERCEDES\")\": " + multimap.containsValue(tr) + "\n" +
+                        "get for " + MERCEDES + ": " + multimap.get(MERCEDES) + "\n" +
+                        "remove for " + MERCEDES + ": " + multimap.remove(MERCEDES) + "\n" +
+                        "keySet: " + multimap.keySet().toString();
 
         System.out.println(output);
     }
