@@ -1,12 +1,11 @@
 package main.java.sbt.HomeTasks.EmailServer;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.channels.Channel;
 import java.util.*;
-
-import static com.sun.org.apache.xml.internal.serializer.utils.Utils.messages;
 
 public class EmailServer {
 
@@ -15,7 +14,6 @@ public class EmailServer {
     private List<Connection> connections;
 
     private ServerSocket server;
-
 
     public EmailServer() {
         try {
@@ -38,13 +36,12 @@ public class EmailServer {
         }
     }
 
-
     private void closeAll() {
         try {
             server.close();
-            synchronized(connections) {
+            synchronized (connections) {
                 Iterator<Connection> iter = connections.iterator();
-                while(iter.hasNext()) {
+                while (iter.hasNext()) {
                     ((Connection) iter.next()).close();
                 }
             }
@@ -58,15 +55,7 @@ public class EmailServer {
         private BufferedReader in;
         private PrintWriter out;
         private Socket socket;
-
-
-        public User getUser() {
-            return user;
-        }
-
         private User user;
-
-
 
         public Connection(Socket socket) {
             this.socket = socket;
@@ -82,9 +71,13 @@ public class EmailServer {
             }
         }
 
+        public User getUser() {
+            return user;
+        }
+
         private void recieveMessage(List<Message> messages) {
             for (Message message : messages) {
-                out.println( String.format("%s %s: %s", message.getDate().toString(), message.getUser(), message.getMessage()) );
+                out.println(String.format("%s %s: %s", message.getDate().toString(), message.getUser(), message.getMessage()));
             }
         }
 
@@ -124,19 +117,17 @@ public class EmailServer {
 
                 while (true) {
                     String str = in.readLine();
-                    if (str.split(":").)
+                    if (str.split(":").length == 2) {
+                        toSend = str.split(":")[1].replaceAll("\\s+", "");
+                        out.println("Current user " + toSend);
+                    }
                     if (conn.isPresent() && conn.get().isAlive()) {
-                        conn.get().out.println(str);
+                        conn.get().out.println(user.getName() + ": " + str);
                     } else {
                         userListMap.put(toSend, (List<Message>) new Message(str, new Date()));
                     }
 
                 }
-
-
-
-
-
 
             } catch (Exception e) {
                 e.printStackTrace();

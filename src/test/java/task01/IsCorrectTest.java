@@ -1,7 +1,6 @@
 package test.java.task01;
 
-import main.java.sbt.HomeTasks.task01.*;
-
+import main.java.sbt.HomeTasks.task01.Pair;
 import org.junit.Test;
 
 import java.nio.charset.Charset;

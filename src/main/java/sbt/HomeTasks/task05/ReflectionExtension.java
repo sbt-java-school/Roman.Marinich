@@ -1,7 +1,5 @@
 package main.java.sbt.HomeTasks.task05;
 
-import org.hamcrest.core.IsNull;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
