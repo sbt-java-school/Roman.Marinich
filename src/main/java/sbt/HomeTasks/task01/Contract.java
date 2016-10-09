@@ -1,11 +1,6 @@
-package main.java.sbt.HomeTasks.task01;
+package sbt.HomeTasks.task01;
 
-/**
- * Created by god on 8/7/2016.
- */
-
-
-public class Contract {
+public abstract class Contract {
     public static void isNotNull(Object obj) {
         if (obj == null) {
             throw new IllegalArgumentException("Illegal null");
@@ -18,7 +13,7 @@ public class Contract {
         }
     }
 
-    public static void isNotNegative(int n) {
+    static void isNotNegative(int n) {
         if (n < 1) {
             throw new IllegalArgumentException("Illegal negative number");
         }

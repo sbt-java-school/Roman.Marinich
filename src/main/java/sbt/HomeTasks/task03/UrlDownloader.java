@@ -1,14 +1,12 @@
-package main.java.sbt.HomeTasks.task03;
+package sbt.HomeTasks.task03;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Scanner;
 
-import static main.java.sbt.HomeTasks.task01.Contract.*;
+import static sbt.HomeTasks.task01.Contract.isNotNull;
+import static sbt.HomeTasks.task01.Contract.isStartWith;
 
-/**
- * Created by god on 8/31/2016.
- */
 public class UrlDownloader {
 
     public static void main(String[] args) {
@@ -29,7 +27,7 @@ public class UrlDownloader {
         }
     }
 
-    public static String getContentUrl(String url) throws IOException {
+    private static String getContentUrl(String url) throws IOException {
         isNotNull(url);
         isStartWith(url, "http");
 

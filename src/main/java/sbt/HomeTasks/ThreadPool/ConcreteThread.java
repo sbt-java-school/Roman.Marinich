@@ -1,14 +1,11 @@
-package main.java.sbt.HomeTasks.ThreadPool;
+package sbt.HomeTasks.ThreadPool;
 
-/**
- * Created by god on 9/30/2016.
- */
-public class ConcreteThread extends Thread {
-    public Runnable getRunnable() {
+class ConcreteThread extends Thread {
+    private Runnable getRunnable() {
         return runnable;
     }
 
-    public void setRunnable(Runnable runnable) {
+    void setRunnable(Runnable runnable) {
         this.runnable = runnable;
     }
 
@@ -16,7 +13,7 @@ public class ConcreteThread extends Thread {
         return exception;
     }
 
-    public void setException(Exception exception) {
+    private void setException(Exception exception) {
         this.exception = exception;
     }
 
@@ -24,7 +21,7 @@ public class ConcreteThread extends Thread {
         return isFailure;
     }
 
-    public void setFailure(boolean failure) {
+    private void setFailure(boolean failure) {
         isFailure = failure;
     }
 

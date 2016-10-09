@@ -1,11 +1,12 @@
-package task02;
+package ConcurrentHashMap;
 
 import org.junit.*;
+
 import sbt.HomeTasks.task02.ListMultimap;
-import sbt.HomeTasks.task02.Multimap;
-import sbt.HomeTasks.task02.Truck;
+import sbt.HomeTasks.task02.*;
 
 import static org.junit.Assert.assertEquals;
+
 import static sbt.HomeTasks.task02.Const.KAMAZ;
 import static sbt.HomeTasks.task02.Const.MERCEDES;
 

@@ -1,4 +1,4 @@
-package main.java.sbt.HomeTasks.task05;
+package sbt.HomeTasks.task05;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -7,14 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import static main.java.sbt.HomeTasks.task01.Contract.*;
+import static sbt.HomeTasks.task01.Contract.isNotNull;
 
-/**
- * Created by god on 8/31/2016.
- */
 public class ReflectionExtension {
     public static void main(String[] args) {
-        Object object = new String();
+        Object object = "";
 
         System.out.println("\tMethods: ");
         getMethods(object).forEach(System.out::println);
@@ -32,28 +29,28 @@ public class ReflectionExtension {
         getHierarchy(object).forEach(System.out::println);
     }
 
-    public static List<String> getMethods(Object obj) {
+    private static List<String> getMethods(Object obj) {
         isNotNull(obj);
         return Arrays.stream(obj.getClass().getDeclaredMethods())
                 .map(Method::getName)
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getFields(Object obj) {
+    private static List<String> getFields(Object obj) {
         isNotNull(obj);
         return Arrays.stream(obj.getClass().getDeclaredFields())
                 .map(Field::getName)
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getConstructors(Object obj) {
+    private static List<String> getConstructors(Object obj) {
         isNotNull(obj);
         return Arrays.stream(obj.getClass().getConstructors())
                 .map(Constructor::getName)
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getGetters(Object obj) {
+    private static List<String> getGetters(Object obj) {
         if (obj == null) return null;
         return Arrays.stream(obj.getClass().getDeclaredMethods())
                 .map(Method::getName)
@@ -61,7 +58,7 @@ public class ReflectionExtension {
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getHierarchy(Object obj) {
+    private static List<String> getHierarchy(Object obj) {
         isNotNull(obj);
 
         List<Class<?>> classes = new ArrayList<>();

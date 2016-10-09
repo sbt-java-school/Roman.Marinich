@@ -1,6 +1,6 @@
-package main.java.sbt.HomeTasks.task06;
+package sbt.HomeTasks.task06;
 
-public class AnnotationRunner {
+class AnnotationRunner {
 
     public void method1() {
         System.out.println("method1");

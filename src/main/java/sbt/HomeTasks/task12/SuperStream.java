@@ -1,4 +1,4 @@
-package main.java.sbt.HomeTasks.task12;
+package sbt.HomeTasks.task12;
 
 public class SuperStream <T> {
 

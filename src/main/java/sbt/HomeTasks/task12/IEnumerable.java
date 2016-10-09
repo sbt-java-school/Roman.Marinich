@@ -1,4 +1,6 @@
-package main.java.sbt.HomeTasks.task12;
+package sbt.HomeTasks.task12;
+
+import sbt.HomeTasks.task12.Decorator;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,7 +24,7 @@ public class IEnumerable<T> {
     }
 
     public IEnumerable <T> Where(Predicate<T> predicate) {
-        decorator.setResult(o -> predicate.test((T)o));
+        decorator.setResult(predicate);
         return this;
     }
 
@@ -31,7 +33,7 @@ public class IEnumerable<T> {
                 .list
                 .stream()
                 .filter(value -> decorator.getResult(value))
-                .map(function::apply)
+                .map(function)
                 .collect(Collectors.toList());
 
         return new IEnumerable<>(newList);

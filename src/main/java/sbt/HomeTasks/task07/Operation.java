@@ -1,6 +1,8 @@
-package main.java.sbt.HomeTasks.task07;
+package sbt.HomeTasks.task07;
 
-import main.java.sbt.HomeTasks.task01.Pair;
+import sbt.HomeTasks.task01.Pair;
+
+import java.util.Objects;
 
 public class Operation {
 
@@ -12,15 +14,15 @@ public class Operation {
         this.operation = operation;
     }
 
-    public Double getLeft() {
+    Double getLeft() {
         return operands.getLeft();
     }
 
-    public Double getRight() {
+    Double getRight() {
         return operands.getRight();
     }
 
-    public String getOperation() {
+    String getOperation() {
         return operation;
     }
 
@@ -32,10 +34,7 @@ public class Operation {
 
         Operation operation1 = (Operation) o;
 
-        if (getLeft() != null ? !getLeft().equals(operation1.getLeft()) : operation1.getLeft() != null) return false;
-        if (getRight() != null ? !getRight().equals(operation1.getRight()) : operation1.getRight() != null)
-            return false;
-        return getOperation() == operation1.getOperation();
+        return getLeft() != null ? getLeft().equals(operation1.getLeft()) : operation1.getLeft() == null && (getRight() != null ? getRight().equals(operation1.getRight()) : operation1.getRight() == null && Objects.equals(getOperation(), operation1.getOperation()));
     }
 
     @Override

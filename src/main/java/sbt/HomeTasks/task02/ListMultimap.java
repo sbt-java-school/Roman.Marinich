@@ -1,7 +1,10 @@
-package main.java.sbt.HomeTasks.task02;
+package sbt.HomeTasks.task02;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import sbt.HomeTasks.task02.*;
+
 
 public class ListMultimap<K, V> implements Multimap<K, V> {
     private Map<K, ArrayList<V>> innerMap = new HashMap<>();
@@ -17,13 +20,13 @@ public class ListMultimap<K, V> implements Multimap<K, V> {
     }
 
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(K key) {
         return innerMap.containsKey(key);
     }
 
     @Override
-    public boolean containsValue(Object value) {
-        for(Map.Entry<K, ArrayList<V>> entry : innerMap.entrySet() ) {
+    public boolean containsValue(V value) {
+        for (Map.Entry<K, ArrayList<V>> entry : innerMap.entrySet()) {
             if (entry.getValue().contains(value)) {
                 return true;
             }
@@ -32,16 +35,16 @@ public class ListMultimap<K, V> implements Multimap<K, V> {
     }
 
     @Override
-    public Collection<V> get(Object key) {
+    public Collection<V> get(K key) {
         return innerMap.get(key);
     }
 
     @Override
     public boolean put(K key, V value) {
         boolean result = false;
-        ArrayList arrayList = innerMap.get(key);
+        ArrayList<V> arrayList = innerMap.get(key);
         if (arrayList == null) {
-            arrayList = new ArrayList();
+            arrayList = new ArrayList<>();
             result = true;
         }
         arrayList.add(value);
@@ -50,7 +53,7 @@ public class ListMultimap<K, V> implements Multimap<K, V> {
     }
 
     @Override
-    public boolean remove(Object key) {
+    public boolean remove(K key) {
         ArrayList arrayList = innerMap.get(key);
         if (arrayList == null) {
             return false;
@@ -82,7 +85,7 @@ public class ListMultimap<K, V> implements Multimap<K, V> {
 
     @Override
     public Collection<V> values() {
-        return innerMap.values().stream().flatMap(t -> t.stream()).collect(Collectors.toList());
+        return innerMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
 
 }

@@ -1,8 +1,4 @@
-package main.java.sbt.HomeTasks.task11;
-
-/**
- * Created by god on 9/21/2016.
- */
+package sbt.HomeTasks.task11;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +35,7 @@ public class PluginLoader extends ClassLoader {
         return this;
     }
 
-    public void loadPlugin(String strPluginFile) throws IOException {
+    private void loadPlugin(String strPluginFile) throws IOException {
         JarFile jarFile = new JarFile(path + strPluginFile);
 
         Enumeration<JarEntry> jarEntries = jarFile.entries();
@@ -65,8 +61,10 @@ public class PluginLoader extends ClassLoader {
     public void loadPlugins() throws IOException {
         String[] jarList = new File(path).list((file, s) -> s.toLowerCase().endsWith(".jar"));
 
-        for (String strJarFile : jarList) {
-            loadPlugin(strJarFile);
+        if (jarList != null) {
+            for (String strJarFile : jarList) {
+                loadPlugin(strJarFile);
+            }
         }
     }
 

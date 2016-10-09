@@ -1,11 +1,8 @@
-package main.java.sbt.HomeTasks.task02;
+package sbt.HomeTasks.task02;
 
-/**
- * Created by god on 8/28/2016.
- */
 public class Truck {
-    public int id;
-    public String type;
+    private int id;
+    private String type;
 
     public Truck(int id, String type) {
         this.id = id;
@@ -19,8 +16,7 @@ public class Truck {
 
         Truck truck = (Truck) o;
 
-        if (id != truck.id) return false;
-        return type != null ? type.equals(truck.type) : truck.type == null;
+        return id == truck.id && (type != null ? type.equals(truck.type) : truck.type == null);
 
     }
 

@@ -1,20 +1,16 @@
-package main.java.sbt.HomeTasks.task02;
+package sbt.HomeTasks.task02;
 
 import java.util.Collection;
 import java.util.Set;
 
-/**
- * Created by SBTJavastudent on 25.08.2016.
- */
-
 public interface Multimap<K, V> {
     int size();
     boolean isEmpty();
-    boolean containsKey(Object key);
-    boolean containsValue(Object value);
-    Collection<V> get(Object key);
+    boolean containsKey(K key);
+    boolean containsValue(V value);
+    Collection<V> get(K key);
     boolean put(K key, V value);
-    boolean remove(Object key);
+    boolean remove(K key);
     boolean putAll(K key, Iterable<? extends V> values);
     void clear();
     Set<K> keySet();

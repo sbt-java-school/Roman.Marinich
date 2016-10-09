@@ -1,19 +1,16 @@
-package test.java.task07;
+package task07;
 
-import main.java.sbt.HomeTasks.task07.CachedCalculator;
-import main.java.sbt.HomeTasks.task07.Calculator;
-import main.java.sbt.HomeTasks.task07.CalculatorImpl;
-import main.java.sbt.HomeTasks.task07.Operation;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import sbt.HomeTasks.task07.CachedCalculator;
+import sbt.HomeTasks.task07.Calculator;
+import sbt.HomeTasks.task07.CalculatorImpl;
+import sbt.HomeTasks.task07.Operation;
 
 import java.lang.reflect.Proxy;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by god on 9/14/2016.
- */
 public class IsCorrectTest {
     private static Calculator calc = new CalculatorImpl();
     private static Calculator calcProxy;

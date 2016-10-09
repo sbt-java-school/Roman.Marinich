@@ -1,16 +1,12 @@
-package test.java.task11;
-
-import main.java.sbt.HomeTasks.task11.IPlugin;
-import main.java.sbt.HomeTasks.task11.PluginLoader;
+package task11;
 
 import org.junit.Test;
+import sbt.HomeTasks.task11.IPlugin;
+import sbt.HomeTasks.task11.PluginLoader;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-/**
- * Created by god on 9/21/2016.
- */
 public class IsCorrectTest {
     @Test
     public void simpleCheck() {
@@ -27,7 +23,6 @@ public class IsCorrectTest {
             fail();
         }
 
-        ;
         assertEquals(plugin.run(), "execute method run()");
     }
 }

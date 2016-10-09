@@ -1,7 +1,8 @@
-package main.java.sbt.HomeTasks.task01;
+package sbt.HomeTasks.task01;
 
 import java.util.stream.IntStream;
-import static main.java.sbt.HomeTasks.task01.Contract.*;
+
+import static sbt.HomeTasks.task01.Contract.*;
 
 public class Solver {
     public static Pair<Integer, Integer> solve(int param, IntStream numbers)  {

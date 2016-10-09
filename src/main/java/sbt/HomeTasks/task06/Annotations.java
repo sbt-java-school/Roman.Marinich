@@ -1,14 +1,14 @@
-package main.java.sbt.HomeTasks.task06;
+package sbt.HomeTasks.task06;
 
 import java.lang.reflect.Method;
 
 
 public class Annotations {
     public static void main(String[] args) {
-        printAllAnntations(new AnnotationRunner());
+        printAllAnnotations(new AnnotationRunner());
     }
 
-    public static void printAllAnntations(Object obj) {
+    private static void printAllAnnotations(Object obj) {
 
         AnnotationRunner runner = new AnnotationRunner();
         Method[] methods = runner.getClass().getMethods();

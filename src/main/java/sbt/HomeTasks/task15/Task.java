@@ -1,13 +1,8 @@
-package main.java.sbt.HomeTasks.task15;
+package sbt.HomeTasks.task15;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-/**
- * Created by god on 9/27/2016.
- */
-
 
 public class Task<T> {
 

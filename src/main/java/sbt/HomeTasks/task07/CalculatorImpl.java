@@ -1,6 +1,6 @@
-package main.java.sbt.HomeTasks.task07;
+package sbt.HomeTasks.task07;
 
-import main.java.sbt.HomeTasks.task01.Pair;
+import sbt.HomeTasks.task01.Pair;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,7 +19,8 @@ public class CalculatorImpl implements Calculator {
         operators.put("MULTIPLY", (left, right) -> left * right);
     }
 
-    public CalculatorImpl setOperations(Pair<String, BinaryOperator<Double>>... args) {
+    @SafeVarargs
+    public final CalculatorImpl setOperations(Pair<String, BinaryOperator<Double>>... args) {
         Arrays
                 .stream(args)
                 .filter(value -> value.getLeft() != null && value.getRight() != null)
@@ -36,7 +37,7 @@ public class CalculatorImpl implements Calculator {
             return null;
         }
         currentOperation = operation;
-        BinaryOperator bo = operators.get(operation.getOperation());
+        BinaryOperator<Double> bo = operators.get(operation.getOperation());
         if (bo == null) {
             return null;
         }

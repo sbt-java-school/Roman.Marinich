@@ -1,13 +1,10 @@
-package main.java.sbt.HomeTasks.task04;
+package sbt.HomeTasks.task04;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by SBTJavastudent on 25.08.2016.
- */
 public class GarbageCollector {
 
     private static List objects = new ArrayList();
