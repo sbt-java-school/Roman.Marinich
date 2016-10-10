@@ -2,8 +2,7 @@ package ConcurrentHashMap;
 
 import org.junit.*;
 
-import sbt.HomeTasks.ConcurrentHashMap.ConcurrentHashMap;
-import sbt.HomeTasks.task02.ListMultimap;
+import sbt.HomeTasks.task09.ConcurrentHashMap;
 import sbt.HomeTasks.task02.*;
 
 import static org.junit.Assert.assertEquals;
