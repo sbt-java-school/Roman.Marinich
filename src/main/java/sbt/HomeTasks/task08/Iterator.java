@@ -1,4 +1,4 @@
-package main.java.sbt.HomeTasks.Iterator;
+package sbt.HomeTasks.task08;
 
 
 import java.util.List;

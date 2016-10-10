@@ -1,4 +1,4 @@
-package main.java.sbt.HomeTasks.Iterator;
+package sbt.HomeTasks.task08;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +16,3 @@ public class IteratorFactory {
         }
     }
 }
-
-
-//city,
-//salary,
-//periodOfMonth,
-//amount of credit
-
-// Должен жиит в новосибиске и платтить не более 15т
