@@ -1,7 +1,7 @@
-package main.java.sbt.HomeTasks.task15;
+package sbt.HomeTasks.task15;
 
-import main.java.sbt.HomeTasks.ThreadPool.ConcreteThread;
-import main.java.sbt.HomeTasks.ThreadPool.ThreadPool;
+import sbt.HomeTasks.task14.ConcreteThread;
+import sbt.HomeTasks.task14.ThreadPool;
 
 import java.util.ArrayList;
 
@@ -59,8 +59,7 @@ public class Task2 implements ExecutionManager {
 
         @Override
         public void interrupt() {
-            threads.stream()
-                    .forEach(t -> t.interrupt());
+            threads.forEach(t -> t.interrupt());
         }
 
         @Override

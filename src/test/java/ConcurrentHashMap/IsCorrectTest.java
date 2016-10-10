@@ -2,6 +2,7 @@ package ConcurrentHashMap;
 
 import org.junit.*;
 
+import sbt.HomeTasks.ConcurrentHashMap.ConcurrentHashMap;
 import sbt.HomeTasks.task02.ListMultimap;
 import sbt.HomeTasks.task02.*;
 
@@ -16,7 +17,7 @@ public class IsCorrectTest {
 
     @Before
     public void init() {
-        multimap = new ListMultimap<>();
+        multimap = new ConcurrentHashMap<>();
         track = new Truck(1, MERCEDES);
 
         multimap.put(MERCEDES, track);
@@ -29,22 +30,26 @@ public class IsCorrectTest {
 
     @Test
     public void keySetCheck() {
-        assertEquals("[MERCEDES, KAMAZ]", multimap.keySet().toString());
+                assertEquals("[MERCEDES, KAMAZ]", multimap.keySet().toString());
     }
     @Test
     public void sizeCheck() {
+
         assertEquals(2, multimap.size());
     }
     @Test
     public void isEmptyCheck() {
+
         assertEquals(false, multimap.isEmpty());
     }
     @Test
     public void containsKeyCheck() {
+
         assertEquals(true, multimap.containsKey(MERCEDES));
     }
     @Test
     public void containsValueCheck() {
+
         assertEquals(true, multimap.containsValue(track));
     }
     @Test

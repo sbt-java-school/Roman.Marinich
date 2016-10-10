@@ -1,15 +1,17 @@
-package main.java.sbt.HomeTasks.EmailServer;
+package sbt.HomeTasks.task18.EmailServer;
 
 import java.util.Date;
+import java.util.stream.Stream;
 
 public class Message {
     public String getMessage() {
         return new String(message);
     }
 
-    public Message(String message, Date date) {
+    public Message(String message, Date date, String user) {
         this.message = message;
         this.date = date;
+        this.user = user;
     }
 
     private String message;

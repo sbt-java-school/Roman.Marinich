@@ -1,4 +1,4 @@
-package main.java.sbt.HomeTasks.EmailServer;
+package sbt.HomeTasks.task18.EmailServer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -7,18 +7,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-public class EmailServer {
-
+public class ChatServer {
     private List<User> users;
     private Map<String, List<Message>> userListMap;
     private List<Connection> connections;
 
     private ServerSocket server;
 
-    public EmailServer() {
+    public static void main(String[] args) {
+        ChatServer chatServer = new ChatServer();
+    }
+
+    public ChatServer() {
         try {
             server = new ServerSocket(Const.PORT);
+            connections = new ArrayList<>();
             userListMap = new HashMap<>();
+            users = new ArrayList<>();
 
             while (true) {
                 Socket socket = server.accept();
@@ -85,46 +90,98 @@ public class EmailServer {
         public void run() {
             try {
                 out.println("Please input the login and password:");
+                out.flush();
+                String name = "";
 
-                out.println("Login: ");
-                String name = in.readLine();
+                while (true) {
+                    out.print("Login: ");
+                    out.flush();
+                    name = in.readLine();
 
-                out.println("password: ");
-                String password = in.readLine();
+                    out.print("password: ");
+                    out.flush();
+                    String password = in.readLine();
 
-                user = new User(name, password);
+                    user = new User(name, password);
 
-                if (users.contains(user)) {
-                    List<Message> messages = userListMap.get(user);
-                    recieveMessage(messages);
-                } else {
+                    if (!users.contains(user) && users.stream().anyMatch(t -> t.getName().equals(user.getName()))) {
+                        out.println("Such user already exists. Please choose another login!!");
+                        out.flush();
+                    } else {
+                        break;
+                    }
+                }
+
+                if (!users.contains(user)) {
                     out.println("There are not such user. You are registered now!");
                     out.println("Welcome " + user.getName());
+                    out.flush();
                     users.add(user);
+                } else {
+                    out.println(String.format("Hi %s, you are welcome.", user.getName()));
+                    out.flush();
+                }
+
+                List<Message> messages = userListMap.get(user.getName());
+                if (messages == null) {
+                    out.println(String.format("Hi %s, there is no messages for you.", user.getName()));
+                    out.flush();
+                } else {
+                    out.println(String.format("Hi %s, there is messages for you.", user.getName()));
+                    out.flush();
+                    recieveMessage(messages);
                 }
 
 
-                out.print("Who do you want to send a message? \nInput name:");
+                out.println("Who do you want to send a message?");
+                out.print("Input name: ");
+                out.flush();
                 String toSend = in.readLine();
 
                 out.println("Please write your message. Use \"exit\" for stop this.");
+                out.flush();
 
-                Optional<Connection> conn = connections.stream().filter(t -> t.getUser().equals(name)).findFirst();
+                String finalName = name;
+                Optional<Connection> conn = connections.stream().filter(t -> t.getUser().equals(finalName)).findFirst();
 
                 if (conn.isPresent()) {
                     out.println(conn.get().getUser() + " online. Please write your message.");
+                    out.flush();
                 }
 
                 while (true) {
                     String str = in.readLine();
+
+                    if (str.equals("exit")) {
+                        break;
+                    }
+
                     if (str.split(":").length == 2) {
-                        toSend = str.split(":")[1].replaceAll("\\s+", "");
-                        out.println("Current user " + toSend);
+                        while (true) {
+                            toSend = str.split(":")[1].replaceAll("\\s+", "");
+
+                            String finalToSend = toSend;
+                            if (users.stream().anyMatch(q -> q.getName().equals(finalToSend))) {
+                                out.println("Current user " + toSend);
+                                break;
+                            } else  {
+                                out.println("There is no such user. Write username again!");
+                            }
+
+                        }
+
                     }
                     if (conn.isPresent() && conn.get().isAlive()) {
                         conn.get().out.println(user.getName() + ": " + str);
                     } else {
-                        userListMap.put(toSend, (List<Message>) new Message(str, new Date()));
+                        messages = userListMap.get(toSend);
+                        if (messages == null) {
+                            messages = new ArrayList<>();
+                            messages.add(new Message(str, new Date(), user.getName()));
+
+                            userListMap.put(toSend, messages);
+                        }
+                        messages.add(new Message(str, new Date(), user.getName()));
                     }
 
                 }
@@ -143,10 +200,10 @@ public class EmailServer {
                 socket.close();
 
                 connections.remove(this);
-                if (connections.size() == 0) {
-                    EmailServer.this.closeAll();
-                    System.exit(0);
-                }
+//                if (connections.size() == 0) {
+//                    ChatServer.this.closeAll();
+//                    System.exit(0);
+//                }
             } catch (Exception e) {
                 System.err.println("Потоки не были закрыты!");
             }

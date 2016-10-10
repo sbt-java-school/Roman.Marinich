@@ -1,6 +1,6 @@
-package sbt.HomeTasks.ThreadPool;
+package sbt.HomeTasks.task14;
 
-class ConcreteThread extends Thread {
+public class ConcreteThread extends Thread {
     private Runnable getRunnable() {
         return runnable;
     }

@@ -1,4 +1,4 @@
-package sbt.HomeTasks.ThreadPool;
+package sbt.HomeTasks.task14;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -44,7 +44,7 @@ public class ThreadPool {
         this.minSize = minSize;
         setSize(size);
     }
-    private ThreadPool(int minSize) {
+    public ThreadPool(int minSize) {
         if (minSize < 1) {
             throw new IllegalArgumentException("Input parameters should be good");
         }
@@ -52,7 +52,7 @@ public class ThreadPool {
         setSize(100);
     }
 
-    private ConcreteThread startThread(Runnable runnable) {
+    public ConcreteThread startThread(Runnable runnable) {
         if (runnable == null) {
             return null;
         }

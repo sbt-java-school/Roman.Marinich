@@ -6,22 +6,33 @@ import sbt.HomeTasks.task02.Multimap;
 
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 public class ConcurrentHashMap<K, V> implements Multimap<K, V> {
-
     private List<ReentrantLock> reentrantLock;
     private List<List<Pair<K, ArrayList<V>>>> map;
+
     private int maxSize;
+    private int realSize;
+    private double loadFactor;
 
     public ConcurrentHashMap() {
-        reentrantLock = new ArrayList<>();
-        map = new ArrayList<>();
         maxSize = 4;
+
+        reentrantLock = new ArrayList<>(4);
+        for(int i = 0; i < maxSize; ++i) {
+            reentrantLock.add(new ReentrantLock());
+        }
+
+        map = new ArrayList<>();
+        for(int i = 0; i < maxSize; ++i) {
+            map.add(new ArrayList<>());
+        }
     }
 
     private void reHashAll() {
-        List<Pair<K, V>> list = new ArrayList<>(map.size());
-        for(int i = 0; i < list.size(); ++i) {
+        List<Pair<K, V>> list = new ArrayList<>(realSize);
+        for(int i = 0; i < map.size(); ++i) {
             if (map.get(i) == null) {
                 continue;
             }
@@ -37,13 +48,21 @@ public class ConcurrentHashMap<K, V> implements Multimap<K, V> {
 
         maxSize *= 2;
         map = new ArrayList<>(maxSize);
+        for (int i = 0; i < maxSize; ++i) {
+            map.add(new ArrayList<>());
+        }
+
+        reentrantLock = new ArrayList<>(maxSize);
+        for(int i = 0; i < maxSize; ++i) {
+            reentrantLock.add(new ReentrantLock());
+        }
 
         list.forEach(r -> put(r.getLeft(), r.getRight()));
     }
 
     @Override
     public int size() {
-        return map.size();
+        return (int) map.stream().filter(t -> !t.isEmpty()).count();
     }
 
     @Override
@@ -54,7 +73,7 @@ public class ConcurrentHashMap<K, V> implements Multimap<K, V> {
 
     public boolean containsKey(K key) {
         return map.stream()
-                .anyMatch(t -> t.stream().anyMatch(q -> q.equals(key)));
+                .anyMatch(t -> t.stream().anyMatch(q -> q.getLeft().equals(key)));
     }
 
     @Override
@@ -82,11 +101,14 @@ public class ConcurrentHashMap<K, V> implements Multimap<K, V> {
     public boolean put(K key, V value) {
         boolean result = false;
 
-        if (maxSize == map.size()) {
+        realSize++;
+        loadFactor = (double) realSize/maxSize;
+
+        if (loadFactor > 0.8) {
             reHashAll();
         }
 
-        int hashValue = key.hashCode()%map.size();
+        int hashValue = key.hashCode()%maxSize;
         reentrantLock.get(hashValue).lock();
 
         Optional<Pair<K, ArrayList<V>>> pairOptional = map.get(hashValue).stream().filter(t -> t.getLeft().equals(key)).findFirst();
@@ -96,10 +118,13 @@ public class ConcurrentHashMap<K, V> implements Multimap<K, V> {
             ArrayList<V> arrayList = pairOptional.get().getRight();
             arrayList.add(value);
         } else {
-            ArrayList<V> arrayList = new ArrayList<V>();
+            ArrayList<V> arrayList = new ArrayList<>();
+            arrayList.add(value);
             Pair<K, ArrayList<V>> pair = new Pair<>(key, arrayList);
             map.get(hashValue).add(pair);
         }
+
+        reentrantLock.get(hashValue).unlock();
 
         return result;
     }
@@ -129,7 +154,7 @@ public class ConcurrentHashMap<K, V> implements Multimap<K, V> {
 
     @Override
     public Set<K> keySet() {
-        return null;
+        return map.stream().flatMap(t -> t.stream()).map(q -> q.getLeft()).collect(Collectors.toSet());
     }
 
     @Override
@@ -141,14 +166,14 @@ public class ConcurrentHashMap<K, V> implements Multimap<K, V> {
     public boolean remove(K key) {
         boolean result = false;
 
-        int hashValue = key.hashCode()%map.size();
+        int hashValue = key.hashCode()%maxSize;
         reentrantLock.get(hashValue).lock();
 
         List<Pair<K, ArrayList<V>>> arrayList = map.get(hashValue);
 
         if (arrayList != null) {
             result = true;
-            map.set(hashValue, null);
+            map.get(hashValue).clear();
         }
 
         reentrantLock.get(hashValue).unlock();
