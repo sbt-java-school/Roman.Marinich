@@ -1,6 +1,7 @@
 package sbt.HomeTasks.task18.EmailServer;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -91,47 +92,11 @@ public class ChatServer {
             try {
                 out.println("Please input the login and password:");
                 out.flush();
-                String name = "";
 
-                while (true) {
-                    out.print("Login: ");
-                    out.flush();
-                    name = in.readLine();
-
-                    out.print("password: ");
-                    out.flush();
-                    String password = in.readLine();
-
-                    user = new User(name, password);
-
-                    if (!users.contains(user) && users.stream().anyMatch(t -> t.getName().equals(user.getName()))) {
-                        out.println("Such user already exists. Please choose another login!!");
-                        out.flush();
-                    } else {
-                        break;
-                    }
+                if (!prepareInput()) {
+                    return;
                 }
-
-                if (!users.contains(user)) {
-                    out.println("There are not such user. You are registered now!");
-                    out.println("Welcome " + user.getName());
-                    out.flush();
-                    users.add(user);
-                } else {
-                    out.println(String.format("Hi %s, you are welcome.", user.getName()));
-                    out.flush();
-                }
-
-                List<Message> messages = userListMap.get(user.getName());
-                if (messages == null) {
-                    out.println(String.format("Hi %s, there is no messages for you.", user.getName()));
-                    out.flush();
-                } else {
-                    out.println(String.format("Hi %s, there is messages for you.", user.getName()));
-                    out.flush();
-                    recieveMessage(messages);
-                }
-
+                prepareMessage();
 
                 out.println("Who do you want to send a message?");
                 out.print("Input name: ");
@@ -141,8 +106,8 @@ public class ChatServer {
                 out.println("Please write your message. Use \"exit\" for stop this.");
                 out.flush();
 
-                String finalName = name;
-                Optional<Connection> conn = connections.stream().filter(t -> t.getUser().equals(finalName)).findFirst();
+                String finalName = toSend;
+                Optional<Connection> conn = connections.stream().filter(t -> t.getUser().getName().equals(finalName)).findFirst();
 
                 if (conn.isPresent()) {
                     out.println(conn.get().getUser() + " online. Please write your message.");
@@ -151,6 +116,10 @@ public class ChatServer {
 
                 while (true) {
                     String str = in.readLine();
+
+                    if (str == null) {
+                        return;
+                    }
 
                     if (str.equals("exit")) {
                         break;
@@ -167,14 +136,13 @@ public class ChatServer {
                             } else  {
                                 out.println("There is no such user. Write username again!");
                             }
-
                         }
 
                     }
                     if (conn.isPresent() && conn.get().isAlive()) {
                         conn.get().out.println(user.getName() + ": " + str);
                     } else {
-                        messages = userListMap.get(toSend);
+                        List<Message> messages = userListMap.get(toSend);
                         if (messages == null) {
                             messages = new ArrayList<>();
                             messages.add(new Message(str, new Date(), user.getName()));
@@ -183,14 +151,68 @@ public class ChatServer {
                         }
                         messages.add(new Message(str, new Date(), user.getName()));
                     }
-
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 close();
             }
+        }
+
+        private void prepareMessage() {
+            List<Message> messages = userListMap.get(user.getName());
+            if (messages == null) {
+                out.println(String.format("Hi %s, there is no messages for you.", user.getName()));
+                out.flush();
+            } else {
+                out.println(String.format("Hi %s, there is messages for you.", user.getName()));
+                out.flush();
+                recieveMessage(messages);
+            }
+        }
+
+        private boolean prepareInput() throws IOException {
+            while (true) {
+                user = prepareUser();
+                if (user == null) {
+                    return false;
+                }
+
+                if (!users.contains(user) && users.stream().anyMatch(t -> t.getName().equals(user.getName()))) {
+                    out.println("Such user already exists. Please choose another login!!");
+                    out.flush();
+                } else {
+                    break;
+                }
+            }
+
+            if (!users.contains(user)) {
+                out.println("There are not such user. You are registered now!");
+                out.println("Welcome " + user.getName());
+                out.flush();
+                users.add(user);
+            } else {
+                out.println(String.format("Hi %s, you are welcome.", user.getName()));
+                out.flush();
+            }
+            return true;
+        }
+
+        private User prepareUser() throws IOException {
+            String name;
+            out.print("Login: ");
+            out.flush();
+            name = in.readLine();
+
+            out.print("password: ");
+            out.flush();
+            String password = in.readLine();
+
+            if (name != null && password != null) {
+                user = new User(name, password);
+                return user;
+            }
+            return null;
         }
 
         public void close() {

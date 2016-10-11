@@ -81,19 +81,13 @@ public class SoothSayer {
             }
         }
 
-        private void recieveMessage(List<Message> messages) {
-            for (Message message : messages) {
-                out.println(String.format("%s %s: %s", message.getDate().toString(), message.getUser(), message.getMessage()));
-            }
-        }
-
         @Override
         public void run() {
             try {
                 int guessedNumber = new Random().nextInt(10);
                 int inputNumber;
 
-                out.println("SoothSayer guessed a number.");
+                out.println("SoothSayer guessed a number to 10.");
                 out.println("Write your answer:");
 
                 while (true) {
