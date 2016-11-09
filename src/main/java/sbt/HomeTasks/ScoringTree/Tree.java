@@ -3,22 +3,22 @@ package sbt.HomeTasks.ScoringTree;
 import java.util.function.BinaryOperator;
 
 class Tree extends Leaf {
-    void setLeftLeaf(Object leftLeaf) {
+    void setLeftLeaf(Leaf leftLeaf) {
         this.leftLeaf = leftLeaf;
     }
 
-    public Object getLeftLeaf() {
+    public Leaf getLeftLeaf() {
         return leftLeaf;
     }
 
-    public Object getRightLeaf() {
+    public Leaf getRightLeaf() {
         return rightLeaf;
     }
 
-    private Object leftLeaf;
-    private Object rightLeaf;
+    private Leaf leftLeaf;
+    private Leaf rightLeaf;
 
-    void setRightLeaf(Object rightLeaf) {
+    void setRightLeaf(Leaf rightLeaf) {
         this.rightLeaf = rightLeaf;
     }
 

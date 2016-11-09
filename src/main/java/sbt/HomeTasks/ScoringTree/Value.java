@@ -7,8 +7,8 @@ class Value<T> extends Leaf{
 
     private T value;
 
-    Value(Object value){
-        this.value = (T) value;
+    Value(T value){
+        this.value = value;
     }
 
     public void add(T value) {

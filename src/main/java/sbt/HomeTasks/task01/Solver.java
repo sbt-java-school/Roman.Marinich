@@ -5,11 +5,10 @@ import java.util.stream.IntStream;
 import static sbt.HomeTasks.task01.Contract.*;
 
 public class Solver {
-    public static Pair<Integer, Integer> solve(int param, IntStream numbers)  {
-        isNotNull(numbers);
-        isNotNegative(param);
-        final int maxSize = param;
-        return numbers
+    public static Pair<Integer, Integer> solve(final int maxSize, IntStream weights)  {
+        isNotNull(weights);
+        isNotNegative(maxSize);
+        return weights
                 .collect(
                         () -> new Pair<>(0, 0),
                         (l, r) -> {
